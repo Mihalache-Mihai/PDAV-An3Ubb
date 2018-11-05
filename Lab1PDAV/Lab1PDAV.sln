@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1PDAV", "Lab1PDAV\Lab1PDAV.csproj", "{28E29995-0B14-494B-958E-C2ED80B31955}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28E29995-0B14-494B-958E-C2ED80B31955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E29995-0B14-494B-958E-C2ED80B31955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E29995-0B14-494B-958E-C2ED80B31955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E29995-0B14-494B-958E-C2ED80B31955}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F42221FA-C942-4B81-B346-CF080F5DD913}
+	EndGlobalSection
+EndGlobal

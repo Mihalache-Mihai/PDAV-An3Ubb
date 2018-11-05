@@ -5,3 +5,9 @@ C:\Users\mihalami\source\repos\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.csprojAssemb
 C:\Users\mihalami\source\repos\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.csproj.CoreCompileInputs.cache
 C:\Users\mihalami\source\repos\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.exe
 C:\Users\mihalami\source\repos\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.pdb
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\bin\Debug\Lab1PDAV.exe.config
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\bin\Debug\Lab1PDAV.exe
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\bin\Debug\Lab1PDAV.pdb
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.csproj.CoreCompileInputs.cache
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.exe
+C:\Users\Mihai\source\repos\Lab1PDAV\PDAV-An3Ubb\Lab1PDAV\Lab1PDAV\obj\Debug\Lab1PDAV.pdb

@@ -9,9 +9,11 @@ namespace Lab1PDAV
     class ReadFromFile
     {
         double[,] matrixY, matrixU, matrixV;
-        private String filename = "C:\\Users\\mihalami\\Desktop\\nt-P3.ppm";
+        private String filename = "C:\\Users\\Mihai\\Desktop\\nt-P3.ppm";
         string line;
         int numberOfLines;
+        string P3,someDescription,dimension,twoFiveFive;
+        
         public ReadFromFile()
         {
             this.matrixY = new double[600, 800];
@@ -35,10 +37,14 @@ namespace Lab1PDAV
         {
             string text = ReadingFromFile(filename);
             string[] lines = text.Split(new[] { '\n' }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length-3; i++)
+            P3 = lines[0];
+            someDescription = lines[1];
+            dimension = lines[2];
+            twoFiveFive = lines[3];
+            for (int i = 0; i < lines.Length-4; i++)
             {
-                lines[i] = lines[i + 3];
-                //Console.WriteLine(lines[i]);
+                lines[i] = lines[i + 4];
+                Console.WriteLine(lines[i]);
             }
             this.numberOfLines = lines.Length - 3;
 

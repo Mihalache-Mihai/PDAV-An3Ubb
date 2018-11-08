@@ -9,7 +9,7 @@ namespace Lab1PDAV
     class ReadFromFile
     {
         double[,] matrixY, matrixU, matrixV;
-        private String filename = "C:\\Users\\Mihai\\Desktop\\nt-P3.ppm";
+        private String filename = "C:\\Users\\mihalami\\Desktop\\nt-P3.ppm";
         string line;
         int numberOfLines;
         string P3,someDescription,dimension,twoFiveFive;
@@ -91,13 +91,13 @@ namespace Lab1PDAV
                 for(int j = 0; j < 800; j += 8)
                 {
                     
-                    altIndiceJ = 0;
+                    altIndiceI = 0;
                     Block y = new Block(8, i, j);
                     Block u = new Block(8, i, j);
                     Block v = new Block(8, i, j);
                     for(int k = i; k < i + 8; k++)
                     {
-                        altIndiceI = 0;
+                        altIndiceJ = 0;
                         for (int l = j; l < j + 8; l++)
                         {
                             y.matrix[altIndiceI, altIndiceJ] = matrixY[k, l];
@@ -118,17 +118,17 @@ namespace Lab1PDAV
             int indexI = 0, indexJ = 0;
             foreach(Block b in blocks8U)
             {
-                indexJ = 0;
+                indexI = 0;
                 Block u = new Block(4,b.indexi,b.indexj);
                 for(int i = 0; i < 8; i+=2)
                 {
-                    indexI = 0;
+                    indexJ = 0;
                     for(int j = 0; j < 8; j+=2)
                     {
                         u.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4.00;
-                        indexI++;
+                        indexJ++;
                     }
-                    indexJ++;
+                    indexI++;
                 }
                 blocks4U.Add(u);
             }
@@ -136,17 +136,17 @@ namespace Lab1PDAV
             indexI = 0; indexJ = 0;
             foreach (Block b in blocks8V)
             {
-                indexJ = 0;
+                indexI = 0;
                 Block v = new Block(4,b.indexi,b.indexj);
                 for (int i = 0; i < 8; i += 2)
                 {
-                    indexI = 0;
+                    indexJ = 0;
                     for (int j = 0; j < 8; j += 2)
                     {
                         v.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4.00;
-                        indexI++;
+                        indexJ++;
                     }
-                    indexJ++;
+                    indexI++;
                 }
                 blocks4V.Add(v);
             }
@@ -239,7 +239,7 @@ namespace Lab1PDAV
                 stringBuilder.Append(p.B);
             }
 
-            System.IO.File.WriteAllText("C:\\Users\\Mihai\\Desktop\\SecPic.ppm", stringBuilder.ToString());
+            System.IO.File.WriteAllText("C:\\Users\\mihalami\\Desktop\\SecPic.ppm", stringBuilder.ToString());
         }
 
     }

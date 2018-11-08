@@ -20,6 +20,13 @@ namespace Lab1PDAV
         List<Block> blocks4U = new List<Block>();
         List<Block> blocks4V = new List<Block>();
 
+
+        List<Block> blocks8UUpSampled = new List<Block>();
+        List<Block> blocks8VUpSampled = new List<Block>();
+
+
+        Pixel[,] finalMatrix = new Pixel[600,800];
+
         public ReadFromFile()
         {
             this.matrixY = new double[600, 800];
@@ -29,6 +36,8 @@ namespace Lab1PDAV
             PutInMatrices();
             createTheBlocks();
             SubSampling();
+            DownSampling();
+            Decoder();
         }
 
 
@@ -36,8 +45,7 @@ namespace Lab1PDAV
         {
             string text = System.IO.File.ReadAllText(filename);
 
-            // Display the file contents to the console. Variable text is a string.
-            //System.Console.WriteLine("Contents of photo" + text);
+
 
             return text;
         }
@@ -54,16 +62,9 @@ namespace Lab1PDAV
             string[] firstLines = { P3, someDescription, dimension, twoFiveFive };
             StringBuilder stringBuilder = new StringBuilder();
 
-            //foreach (string s in lines)
-            //{
-            //    stringBuilder.Append(s);
-            //    stringBuilder.Append('\n');
-            //}
-            //System.IO.File.WriteAllText("C:\\Users\\Mihai\\Desktop\\WriteLines.ppm", text);
             for (int i = 0; i < lines.Length - 4; i++)
             {
                 lines[i] = lines[i + 4];
-                //Console.WriteLine(lines[i]);
             }
             this.numberOfLines = lines.Length - 3;
 
@@ -102,9 +103,9 @@ namespace Lab1PDAV
                             y.matrix[altIndiceI, altIndiceJ] = matrixY[k, l];
                             u.matrix[altIndiceI, altIndiceJ] = matrixU[k, l];
                             v.matrix[altIndiceI, altIndiceJ] = matrixV[k, l];
-                            altIndiceI++;
+                            altIndiceJ++;
                         }
-                        altIndiceJ++;
+                        altIndiceI++;
                     }
                     this.block8Y.Add(y);
                     this.blocks8U.Add(u);
@@ -118,13 +119,13 @@ namespace Lab1PDAV
             foreach(Block b in blocks8U)
             {
                 indexJ = 0;
-                Block u = new Block(4);
+                Block u = new Block(4,b.indexi,b.indexj);
                 for(int i = 0; i < 8; i+=2)
                 {
                     indexI = 0;
                     for(int j = 0; j < 8; j+=2)
                     {
-                        u.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4;
+                        u.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4.00;
                         indexI++;
                     }
                     indexJ++;
@@ -136,13 +137,13 @@ namespace Lab1PDAV
             foreach (Block b in blocks8V)
             {
                 indexJ = 0;
-                Block v = new Block(4);
+                Block v = new Block(4,b.indexi,b.indexj);
                 for (int i = 0; i < 8; i += 2)
                 {
                     indexI = 0;
                     for (int j = 0; j < 8; j += 2)
                     {
-                        v.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4;
+                        v.matrix[indexI, indexJ] = (b.matrix[i, j] + b.matrix[i, j + 1] + b.matrix[i + 1, j] + b.matrix[i + 1, j + 1]) / 4.00;
                         indexI++;
                     }
                     indexJ++;
@@ -150,5 +151,96 @@ namespace Lab1PDAV
                 blocks4V.Add(v);
             }
         }
+
+        public void DownSampling()
+        {
+            foreach(Block b in blocks4U)
+            {
+                Block u = new Block(8,b.indexi,b.indexj);
+                for (int i = 0; i < 4; i ++)
+                {
+                    for(int j = 0; j < 4; j++)
+                    {
+                        u.matrix[i * 2, j * 2] = b.matrix[i, j];
+                        u.matrix[i * 2 + 1, j * 2] = b.matrix[i, j];
+                        u.matrix[i * 2, j * 2 + 1] = b.matrix[i, j];
+                        u.matrix[i * 2 + 1, j * 2 + 1] = b.matrix[i, j];
+                    }
+                }
+                blocks8UUpSampled.Add(u);
+            }
+            foreach (Block b in blocks4V)
+            {
+                Block v = new Block(8,b.indexi,b.indexj);
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        v.matrix[i*2, j*2] = b.matrix[i, j];
+                        v.matrix[i*2 , j*2+1] = b.matrix[i, j];
+                        v.matrix[i*2+1, j*2] = b.matrix[i, j];
+                        v.matrix[i*2 + 1, j*2 + 1] = b.matrix[i, j];
+                    }
+                }
+                blocks8VUpSampled.Add(v);
+            }
+        }
+
+
+        public int Clamp(double value)
+        {
+            if (value > 255)
+                return 255;
+            else if (value < 0)
+            {
+                return 0;
+            }
+            else
+                return (int)value;
+        }
+
+        public void Decoder()
+        {
+            for(int i = 0; i < block8Y.Count; i++)
+            {
+                int startI = block8Y[i].indexi;
+                int startJ = block8Y[i].indexj;
+                for(int mi = 0; mi < 8; mi++)
+                {
+                    for(int mj =0; mj < 8; mj++)
+                    {
+                        double c = block8Y[i].matrix[mi, mj] - 16;
+                        double d = blocks8UUpSampled[i].matrix[mi, mj] - 128;
+                        double e = blocks8VUpSampled[i].matrix[mi, mj] - 128;
+                        int r = Clamp((int)(298 * c + 409 * e + 128) >> 8);
+                        int g = Clamp((int)(298 * c - 100 * d - 208 * e + 128) >> 8);
+                        int b = Clamp((int)(298 * c + 516 * d + 128) >> 8);
+
+                        finalMatrix[startI + mi, startJ + mj] = new Pixel(r, g, b);
+                    }
+                }
+
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(P3);
+            stringBuilder.Append(Environment.NewLine);
+            stringBuilder.Append(someDescription);
+            stringBuilder.Append("\n");
+            stringBuilder.Append(dimension);
+            stringBuilder.Append("\n");
+            stringBuilder.Append(twoFiveFive);
+            foreach (Pixel p in finalMatrix)
+            {
+                stringBuilder.Append("\n");
+                stringBuilder.Append(p.R);
+                stringBuilder.Append("\n");
+                stringBuilder.Append(p.G);
+                stringBuilder.Append("\n");
+                stringBuilder.Append(p.B);
+            }
+
+            System.IO.File.WriteAllText("C:\\Users\\Mihai\\Desktop\\SecPic.ppm", stringBuilder.ToString());
+        }
+
     }
 }

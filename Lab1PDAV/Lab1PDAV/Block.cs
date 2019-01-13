@@ -9,7 +9,7 @@ namespace Lab1PDAV
     class Block
     {
         int size;
-        public double[,] matrix;
+       public double[,] matrix;
        public  int indexi;
        public  int indexj;
 
